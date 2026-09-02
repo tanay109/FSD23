@@ -1,0 +1,415 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Booking System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style> 
+
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+        }
+
+        body {
+            background-color: white ;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 600px;
+            min-height: 600px;
+            background-color: #3d84ff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            color: #fdfdfd;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .header img {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto 10px;
+            border: 3px solid #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .header h1 {
+            font-size: 25px;
+            color: #fcfdff;
+            margin-top: 5px;
+        }
+
+        /* User Information */
+        /* .box {
+            border: 2px solid #eff0f1;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 12px;
+        } */
+
+        .box h2 {
+            display: block;
+            width: 100%;
+            font-size: 20px;
+            color: #1d3557;
+            background-color: red;
+            padding: 10px 0;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 9px;
+        }
+
+        .form-row label {
+            width: 150px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #999;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Bus Information */
+        .bus-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .bus-type {
+            flex: 1;
+        }
+
+        .bus-type label {
+            display: block;
+            padding: 7px;
+            cursor: pointer;
+        }
+
+        .bus-type input {
+            margin-right: 8px;
+        }
+
+        .seat {
+            width: 180px;
+        }
+
+        .seat select {
+            width: 100%;
+        }
+
+        /* Buy Button */
+        .button-box {
+            text-align: center;
+            border: 2px solid #1d3557;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .buy-btn {
+            background-color: #1d3557;
+            color: white;
+            border: none;
+            padding: 10px 40px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .buy-btn:hover {
+            background-color: #457b9d;
+        }
+
+        /* Success Ticket */
+        #ticket {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border: 2px solid #2a9d8f;
+            border-radius: 10px;
+            background-color: #e9f9f5;
+        }
+
+        #ticket h2 {
+            color: #16826f;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .ticket-row {
+            margin: 6px 0;
+        }
+
+        .ticket-row strong {
+            display: inline-block;
+            width: 150px;
+        }
+
+        .success {
+            text-align: center;
+            color: #16826f;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+
+
+</style>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <img src="https://t3.ftcdn.net/jpg/04/91/24/24/360_F_491242470_WdSpwKRMYiHqTvRBRpsH72cM4g1VWL22.jpg">
+            <h1>BUS BOOKING SYSTEM</h1>
+        </div>
+
+        <div class="box">
+            <h2>User Information</h2>
+            <div class="form-row">
+                <label>User Name :</label>
+                <input type="text" id="name" placeholder="Enter your Name">
+            </div>
+
+            <div class="form-row">
+                <label>User Age :</label>
+                <input type="number" id="age"
+                       placeholder="Enter your age">
+            </div>
+
+            <div class="form-row">
+                <label>Aadhar Number :</label>
+                <input type="text" id="aadhar"
+                       placeholder="Enter 12 digit Aadhar"
+                       maxlength="12"
+                       inputmode="numeric">
+            </div>
+
+            <div class="form-row">
+                <label>Select Your City :</label>
+
+                <select id="city">
+                    <option value="">Select City -</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Mumbai">Mumbai</option>
+                    <option value="Bangalore">Bangalore</option>
+                    <option value="Chennai">Chennai</option>
+                    <option value="Hyderabad">Hyderabad</option>
+                    <option value="Kolkata">Kolkata</option>
+                    <option value="Jaipur">Jaipur</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label>Journey Date :</label>
+                <input type="date" id="date">
+            </div>
+
+        </div>
+
+        <div class="box">
+            <h2>Bus Information</h2>
+            <div class="bus-info">
+                <div class="bus-type">
+                    <label>
+                        <input type="radio"
+                               name="bus"
+                               value="AC Bus"
+                               data-price="2000">
+                        AC Bus - 2000
+                    </label>
+
+                    <label>
+                        <input type="radio"
+                               name="bus"
+                               value="Non AC Bus"
+                               data-price="1500">
+                        Non AC Bus - 1500
+                    </label>
+
+                </div>
+
+                <div class="seat">
+
+                    <label><strong>Select Your Seat</strong></label>
+
+                    <select id="seat">
+                        <option value="">Select Seat -</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="button-box">
+
+            <button class="buy-btn" onclick="bookTicket()">
+                BUY NOW
+            </button>
+
+        </div>
+
+        <div id="ticket">
+
+            <h2> Ticket Booking Successfully!</h2>
+
+            <div class="success">
+                Your bus ticket has been booked successfully.
+            </div>
+
+            <div class="ticket-row">
+                <strong>Passenger Name:</strong>
+                <span id="showName"></span>
+            </div>
+
+            <div class="ticket-row">
+                <strong>Passenger Age:</strong>
+                <span id="showAge"></span>
+            </div>
+
+            <div class="ticket-row">
+                <strong>Aadhar Number:</strong>
+                <span id="showAadhar"></span>
+            </div>
+
+            <div class="ticket-row">
+                <strong>City:</strong>
+                <span id="showCity"></span>
+            </div>
+
+            <div class="ticket-row">
+                <strong>Journey Date:</strong>
+                <span id="showDate"></span>
+            </div>
+
+            <div class="ticket-row">
+                <strong>Bus Type:</strong>
+                <span id="showBus"></span>
+            </div>
+
+            <div class="ticket-row">
+                <strong>Seat Number:</strong>
+                <span id="showSeat"></span>
+            </div>
+
+            <div class="ticket-row">
+                <strong>Ticket Price:</strong>
+                ₹<span id="showPrice"></span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        function bookTicket() {
+
+            let name = document.getElementById("name").value.trim();
+            let age = document.getElementById("age").value;
+            let aadhar = document.getElementById("aadhar").value;
+            let city = document.getElementById("city").value;
+            let date = document.getElementById("date").value;
+            let seat = document.getElementById("seat").value;
+
+            let bus = document.querySelector(
+                'input[name="bus"]:checked'
+            );
+
+            if (name === "") {
+                alert("Please enter your name.");
+                return;
+            }
+
+            if (age === "" || age < 1) {
+                alert("Please enter a valid age.");
+                return;
+            }
+
+            if (!/^\d{12}$/.test(aadhar)) {
+                alert("Aadhar number must contain exactly 12 digits.");
+                return;
+            }
+
+            if (city === "") {
+                alert("Please select your city.");
+                return;
+            }
+
+            if (date === "") {
+                alert("Please select journey date.");
+                return;
+            }
+
+            if (!bus) {
+                alert("Please select AC or Non-AC bus.");
+                return;
+            }
+
+            if (seat === "") {
+                alert("Please select your seat.");
+                return;
+            }
+            let busName = bus.value;
+            let price = bus.getAttribute("data-price");
+
+            document.getElementById("showName").textContent = name;
+            document.getElementById("showAge").textContent = age;
+            document.getElementById("showAadhar").textContent = aadhar;
+            document.getElementById("showCity").textContent = city;
+            document.getElementById("showDate").textContent = date;
+            document.getElementById("showBus").textContent = busName;
+            document.getElementById("showSeat").textContent = seat;
+            document.getElementById("showPrice").textContent = price;
+
+            document.getElementById("ticket").style.display = "block";
+
+            document.getElementById("ticket").scrollIntoView({
+                behavior: "smooth"
+            });
+        }
+
+    </script>
+
+</body>
+</html>
+
+
+
