@@ -1,0 +1,12 @@
+{
+  "name": "attendance-system",
+  "version": "1.0.0",
+  "description": "Attendance Management System with Admin and Student Panels",
+  "main": "admin-panel/server.js",
+  "scripts": {
+    "start": "node admin-panel/server.js"
+  },
+  "keywords": ["attendance", "admin-panel", "student-panel", "school", "college"],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "asg_1792556189318_94c813",
+    "title": "Algorithm Design Homework 2",
+    "course": "B.Tech CSE",
+    "section": "A",
+    "subject": "Design and Analysis of Algorithms",
+    "dueDate": "2026-11-15",
+    "description": "Solve problems 1 through 5 on Dynamic Programming.",
+    "fileName": "1792556189311_Algorithms_HW2.pdf",
+    "originalName": "Algorithms_HW2.pdf",
+    "fileSize": "41 B",
+    "fileUrl": "/uploads/assignments/1792556189311_Algorithms_HW2.pdf",
+    "createdAt": "2026-10-21T04:16:29.318Z"
+  },
+  {
+    "id": "asg-1",
+    "title": "Data Structures: Binary Trees & Graphs Implementation",
+    "course": "B.Tech CSE",
+    "section": "A",
+    "subject": "Data Structures & Algorithms",
+    "dueDate": "2026-10-30",
+    "description": "Complete the implementations of BFS, DFS and AVL tree rotations. Submit code along with test cases.",
+    "fileName": "sample_dsa_assignment.pdf",
+    "originalName": "DSA_Unit3_Assignment.pdf",
+    "fileSize": "45.2 KB",
+    "fileUrl": "/uploads/assignments/sample_dsa_assignment.pdf",
+    "createdAt": "2026-10-21T04:10:40.786Z"
+  }
+]

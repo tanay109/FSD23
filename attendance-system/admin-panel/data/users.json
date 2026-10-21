@@ -1,0 +1,11 @@
+[
+  {
+    "id": "teacher-1",
+    "name": "Dr. Sarah Jenkins",
+    "email": "teacher@school.edu",
+    "password": "password123",
+    "department": "Computer Science",
+    "role": "teacher",
+    "createdAt": "2026-10-21T04:10:40.781Z"
+  }
+]

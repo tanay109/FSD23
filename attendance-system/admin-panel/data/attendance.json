@@ -1,0 +1,128 @@
+[
+  {
+    "id": "att-1",
+    "date": "2026-10-19",
+    "course": "B.Tech CSE",
+    "section": "A",
+    "studentId": "std-101",
+    "status": "present",
+    "markedAt": "2026-10-19T09:30:00.000Z"
+  },
+  {
+    "id": "att-2",
+    "date": "2026-10-19",
+    "course": "B.Tech CSE",
+    "section": "A",
+    "studentId": "std-102",
+    "status": "present",
+    "markedAt": "2026-10-19T09:30:00.000Z"
+  },
+  {
+    "id": "att-3",
+    "date": "2026-10-19",
+    "course": "B.Tech CSE",
+    "section": "A",
+    "studentId": "std-103",
+    "status": "absent",
+    "markedAt": "2026-10-19T09:30:00.000Z"
+  },
+  {
+    "id": "att-4",
+    "date": "2026-10-19",
+    "course": "B.Tech CSE",
+    "section": "A",
+    "studentId": "std-104",
+    "status": "present",
+    "markedAt": "2026-10-19T09:30:00.000Z"
+  },
+  {
+    "id": "att-5",
+    "date": "2026-10-20",
+    "course": "B.Tech CSE",
+    "section": "A",
+    "studentId": "std-101",
+    "status": "present",
+    "markedAt": "2026-10-20T09:30:00.000Z"
+  },
+  {
+    "id": "att-6",
+    "date": "2026-10-20",
+    "course": "B.Tech CSE",
+    "section": "A",
+    "studentId": "std-102",
+    "status": "absent",
+    "markedAt": "2026-10-20T09:30:00.000Z"
+  },
+  {
+    "id": "att-7",
+    "date": "2026-10-20",
+    "course": "B.Tech CSE",
+    "section": "A",
+    "studentId": "std-103",
+    "status": "present",
+    "markedAt": "2026-10-20T09:30:00.000Z"
+  },
+  {
+    "id": "att-8",
+    "date": "2026-10-20",
+    "course": "B.Tech CSE",
+    "section": "A",
+    "studentId": "std-104",
+    "status": "present",
+    "markedAt": "2026-10-20T09:30:00.000Z"
+  },
+  {
+    "id": "att_1792556149181_aaaa4d",
+    "date": "2026-10-21",
+    "course": "B.Tech CSE",
+    "section": "A",
+    "studentId": "std-101",
+    "status": "present",
+    "markedAt": "2026-10-21T04:15:49.181Z"
+  },
+  {
+    "id": "att_1792556149181_c57fff",
+    "date": "2026-10-21",
+    "course": "B.Tech CSE",
+    "section": "A",
+    "studentId": "std-102",
+    "status": "present",
+    "markedAt": "2026-10-21T04:15:49.181Z"
+  },
+  {
+    "id": "att_1792556149181_78ef2f",
+    "date": "2026-10-21",
+    "course": "B.Tech CSE",
+    "section": "A",
+    "studentId": "std-103",
+    "status": "absent",
+    "markedAt": "2026-10-21T04:15:49.181Z"
+  },
+  {
+    "id": "att_1792556149181_49651d",
+    "date": "2026-10-21",
+    "course": "B.Tech CSE",
+    "section": "A",
+    "studentId": "std-104",
+    "status": "present",
+    "markedAt": "2026-10-21T04:15:49.181Z"
+  },
+  {
+    "id": "att_1792556155785_fe265c",
+    "date": "2026-11-05",
+    "course": "B.Tech CSE",
+    "section": "A",
+    "studentId": "std-101",
+    "status": "absent",
+    "markedAt": "2026-10-21T04:15:55.785Z"
+  },
+  {
+    "id": "att_1792556155785_2d729f",
+    "date": "2026-11-05",
+    "course": "B.Tech CSE",
+    "section": "A",
+    "studentId": "std-102",
+    "status": "present",
+    "markedAt": "2026-10-21T04:15:55.785Z"
+  }
+]

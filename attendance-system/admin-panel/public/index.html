@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduAttend • Admin & Teacher Attendance Portal</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ================= AUTH VIEW (LOGIN / REGISTER) ================= -->
+  <div id="authContainer" class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="logo-badge">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <h1>EduAttend Portal</h1>
+        <p id="portalSubtitle">Academic Attendance &amp; Student Portal</p>
+
+        <!-- Role Switcher: Login as Teacher vs Login as Student -->
+        <div class="role-switch-container">
+          <button type="button" class="role-switch-btn active" id="roleBtnTeacher" onclick="switchAuthRole('teacher')">
+            <i class="fa-solid fa-chalkboard-user"></i> Login as Teacher
+          </button>
+          <button type="button" class="role-switch-btn" id="roleBtnStudent" onclick="switchAuthRole('student')">
+            <i class="fa-solid fa-user-graduate"></i> Login as Student
+          </button>
+        </div>
+      </div>
+
+      <!-- TEACHER FORMS CONTAINER -->
+      <div id="teacherFormsContainer">
+        <div class="auth-tabs">
+          <button type="button" class="auth-tab-btn active" id="tabLoginBtn" onclick="switchAuthTab('login')">
+            <i class="fa-solid fa-right-to-bracket"></i> Teacher Login
+          </button>
+          <button type="button" class="auth-tab-btn" id="tabRegisterBtn" onclick="switchAuthTab('register')">
+            <i class="fa-solid fa-user-plus"></i> Teacher Register
+          </button>
+        </div>
+
+        <div class="auth-body">
+          <!-- Teacher Login Form -->
+          <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+              <label for="loginEmail">Teacher Email Address</label>
+              <input type="email" id="loginEmail" class="form-control" placeholder="teacher@school.edu" required autocomplete="username">
+            </div>
+            <div class="form-group">
+              <label for="loginPassword">Password</label>
+              <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+            </div>
+            <button type="submit" class="btn btn-primary" style="margin-top: 8px;">
+              <i class="fa-solid fa-arrow-right-to-bracket"></i> Login to Admin Panel
+            </button>
+            
+            <div class="demo-login-box">
+              <div>
+                <strong>Demo Teacher Account</strong><br>
+                <span style="font-size: 11px; color: #4b5563;">teacher@school.edu / password123</span>
+              </div>
+              <button type="button" onclick="fillDemoTeacherCredentials()">Auto Fill</button>
+            </div>
+          </form>
+
+          <!-- Teacher Register Form -->
+          <form id="registerForm" onsubmit="handleRegister(event)" style="display: none;">
+            <div class="form-group">
+              <label for="regName">Full Name</label>
+              <input type="text" id="regName" class="form-control" placeholder="Dr. Sarah Jenkins" required>
+            </div>
+            <div class="form-group">
+              <label for="regEmail">Work Email</label>
+              <input type="email" id="regEmail" class="form-control" placeholder="sarah.jenkins@school.edu" required>
+            </div>
+            <div class="form-group">
+              <label for="regDepartment">Department / Subject</label>
+              <input type="text" id="regDepartment" class="form-control" placeholder="Computer Science & Engineering">
+            </div>
+            <div class="form-group">
+              <label for="regPassword">Create Password</label>
+              <input type="password" id="regPassword" class="form-control" placeholder="Minimum 6 characters" minlength="6" required>
+            </div>
+            <button type="submit" class="btn btn-primary" style="margin-top: 8px;">
+              <i class="fa-solid fa-user-check"></i> Register Teacher Account
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- STUDENT FORMS CONTAINER -->
+      <div id="studentFormsContainer" style="display: none;">
+        <div class="auth-tabs">
+          <button type="button" class="auth-tab-btn active" id="tabStudentLoginBtn" onclick="switchAuthTab('login')">
+            <i class="fa-solid fa-right-to-bracket"></i> Student Login
+          </button>
+          <button type="button" class="auth-tab-btn" id="tabStudentRegisterBtn" onclick="switchAuthTab('register')">
+            <i class="fa-solid fa-user-plus"></i> Student Register
+          </button>
+        </div>
+
+        <div class="auth-body">
+          <!-- Student Login Form -->
+          <form id="studentLoginForm" onsubmit="handleStudentLogin(event)">
+            <div class="form-group">
+              <label for="studentLoginIdentifier">Admission No. or Student Email</label>
+              <input type="text" id="studentLoginIdentifier" class="form-control" placeholder="e.g. ADM2026001 or aarav@example.com" required>
+            </div>
+            <div class="form-group">
+              <label for="studentLoginPassword">Password</label>
+              <input type="password" id="studentLoginPassword" class="form-control" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn btn-primary" style="margin-top: 8px; background: linear-gradient(135deg, #0284c7, #2563eb);">
+              <i class="fa-solid fa-arrow-right-to-bracket"></i> Login to Student Panel
+            </button>
+            
+            <div class="demo-login-box" style="border-color: #0284c7; background: #eff6ff;">
+              <div>
+                <strong>Demo Student Account</strong><br>
+                <span style="font-size: 11px; color: #1e3a8a;">Aarav Sharma • ADM2026001 / password123</span>
+              </div>
+              <button type="button" onclick="fillDemoStudentCredentials()" style="background: #0284c7;">Auto Fill</button>
+            </div>
+          </form>
+
+          <!-- Student Register Form -->
+          <form id="studentRegisterForm" onsubmit="handleStudentRegister(event)" style="display: none;">
+            <div class="form-group">
+              <label for="stdRegName">Full Name *</label>
+              <input type="text" id="stdRegName" class="form-control" placeholder="e.g. Aarav Sharma" required>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="stdRegAdm">Admission No *</label>
+                <input type="text" id="stdRegAdm" class="form-control" placeholder="ADM2026099" required>
+              </div>
+              <div class="form-group">
+                <label for="stdRegRoll">Roll Number *</label>
+                <input type="text" id="stdRegRoll" class="form-control" placeholder="CS-99" required>
+              </div>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="stdRegCourse">Course *</label>
+                <input type="text" id="stdRegCourse" class="form-control" placeholder="B.Tech CSE" required>
+              </div>
+              <div class="form-group">
+                <label for="stdRegSection">Section *</label>
+                <input type="text" id="stdRegSection" class="form-control" placeholder="A" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="stdRegEmail">Email Address</label>
+              <input type="email" id="stdRegEmail" class="form-control" placeholder="student@example.com">
+            </div>
+            <div class="form-group">
+              <label for="stdRegContact">Phone / Contact</label>
+              <input type="tel" id="stdRegContact" class="form-control" placeholder="+91 98765 43210">
+            </div>
+            <div class="form-group">
+              <label for="stdRegPassword">Password *</label>
+              <input type="password" id="stdRegPassword" class="form-control" placeholder="Minimum 6 characters" minlength="6" required>
+            </div>
+            <button type="submit" class="btn btn-primary" style="margin-top: 8px; background: linear-gradient(135deg, #0284c7, #2563eb);">
+              <i class="fa-solid fa-user-check"></i> Register Student Account
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MAIN ADMIN APP SHELL ================= -->
+  <div id="appContainer" class="app-container" style="display: none;">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-school"></i>
+        </div>
+        <div>
+          <div class="brand-title">EduAttend <span class="brand-badge">ADMIN</span></div>
+          <div style="font-size: 11px; color: #64748b;">Teacher Portal</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-view="dashboard" onclick="switchView('dashboard')">
+          <span class="icon"><i class="fa-solid fa-chart-pie"></i></span>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-item" data-view="attendance" onclick="switchView('attendance')">
+          <span class="icon"><i class="fa-solid fa-calendar-check"></i></span>
+          <span>Take Attendance</span>
+        </button>
+        <button class="nav-item" data-view="addStudent" onclick="switchView('addStudent')">
+          <span class="icon"><i class="fa-solid fa-user-plus"></i></span>
+          <span>Add Student</span>
+        </button>
+        <button class="nav-item" data-view="records" onclick="switchView('records')">
+          <span class="icon"><i class="fa-solid fa-users"></i></span>
+          <span>Student Records</span>
+          <span class="nav-badge" id="navBadgeStudentCount">0</span>
+        </button>
+        <button class="nav-item" data-view="assignments" onclick="switchView('assignments')">
+          <span class="icon"><i class="fa-solid fa-file-arrow-up"></i></span>
+          <span>Assignments</span>
+          <span class="nav-badge" id="navBadgeAssignmentCount">0</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-snippet">
+          <div class="avatar-circle" id="userAvatar">T</div>
+          <div class="user-snippet-info">
+            <div class="user-name" id="userNameDisplay">Teacher Name</div>
+            <div class="user-role" id="userDeptDisplay">Faculty Admin</div>
+          </div>
+        </div>
+        <button class="logout-btn" title="Sign Out" onclick="handleLogout()">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <h2 id="pageTitle">Dashboard Overview</h2>
+          <p id="pageSubtitle">System metrics and quick attendance management</p>
+        </div>
+        <div class="topbar-right">
+          <div class="date-pill">
+            <i class="fa-regular fa-calendar"></i>
+            <span id="currentDateDisplay">Loading date...</span>
+          </div>
+          <!-- One-click Daily Email Dispatch Button -->
+          <button class="btn btn-sm" onclick="openDailyEmailModal()" style="background: linear-gradient(135deg, #0284c7, #2563eb); color: #fff;">
+            <i class="fa-solid fa-paper-plane"></i> Send Daily Mail (1-Click)
+          </button>
+          <button class="btn btn-outline btn-sm" onclick="quickRefresh()">
+            <i class="fa-solid fa-rotate-right"></i> Refresh
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Views -->
+      <main class="page-content">
+
+        <!-- ================= VIEW 1: DASHBOARD ================= -->
+        <section id="viewDashboard" class="section-view active">
+          <!-- Metric Cards -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-info">
+                <h3>Total Students</h3>
+                <div class="metric-value" id="dashTotalStudents">0</div>
+                <div class="metric-sub">Added till date</div>
+              </div>
+              <div class="metric-icon icon-blue">
+                <i class="fa-solid fa-user-graduate"></i>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-info">
+                <h3>Overall Present %</h3>
+                <div class="metric-value" id="dashAttendanceRate">0%</div>
+                <div class="metric-sub" id="dashAttendanceSub">Across all sessions</div>
+              </div>
+              <div class="metric-icon icon-green">
+                <i class="fa-solid fa-circle-check"></i>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-info">
+                <h3>Active Courses</h3>
+                <div class="metric-value" id="dashActiveCourses">0</div>
+                <div class="metric-sub">With registered students</div>
+              </div>
+              <div class="metric-icon icon-purple">
+                <i class="fa-solid fa-book-bookmark"></i>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-info">
+                <h3>Assignments</h3>
+                <div class="metric-value" id="dashAssignmentsCount">0</div>
+                <div class="metric-sub">Active documents</div>
+              </div>
+              <div class="metric-icon icon-red">
+                <i class="fa-solid fa-file-pdf"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="control-bar" style="justify-content: space-between; align-items: center;">
+            <div>
+              <h4 style="font-size: 16px; font-weight: 700; color: var(--text-main);">Quick Portal Actions</h4>
+              <p style="font-size: 13px; color: var(--text-muted);">Jump directly into primary attendance or student tasks</p>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button class="btn btn-primary" onclick="switchView('attendance')">
+                <i class="fa-solid fa-calendar-check"></i> Mark Attendance
+              </button>
+              <button class="btn btn-outline" onclick="openDailyEmailModal()" style="color: #2563eb; border-color: #93c5fd;">
+                <i class="fa-solid fa-paper-plane"></i> Send Daily Mail
+              </button>
+              <button class="btn btn-outline" onclick="switchView('addStudent')">
+                <i class="fa-solid fa-user-plus"></i> Add New Student
+              </button>
+              <button class="btn btn-outline" onclick="openAssignmentModal()">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Upload Assignment
+              </button>
+            </div>
+          </div>
+
+          <!-- Recent Students Table Preview -->
+          <div class="section-header" style="margin-top: 24px;">
+            <div class="section-header-title">
+              <h3>Recently Added Students</h3>
+              <span class="tag">Latest Entries</span>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="switchView('records')">
+              View All Records <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+
+          <div class="table-container">
+            <table class="records-table">
+              <thead>
+                <tr>
+                  <th>Roll No</th>
+                  <th>Admission No</th>
+                  <th>Student Name</th>
+                  <th>Course &amp; Section</th>
+                  <th>Contact</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="dashboardRecentStudentsBody">
+                <tr>
+                  <td colspan="6" class="empty-state">
+                    <i class="fa-solid fa-spinner fa-spin empty-icon"></i>
+                    <h4>Loading recent students...</h4>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ================= VIEW 2: TAKE ATTENDANCE ================= -->
+        <section id="viewAttendance" class="section-view">
+          <!-- Selection & Filter Bar -->
+          <div class="control-bar">
+            <!-- Course / Class Dropdown -->
+            <div class="form-group">
+              <label for="attCourseSelect"><i class="fa-solid fa-graduation-cap"></i> Select Class / Course</label>
+              <select id="attCourseSelect" class="form-control" onchange="onAttendanceCourseChange()">
+                <option value="">-- Choose Course --</option>
+              </select>
+            </div>
+
+            <!-- Section Dropdown -->
+            <div class="form-group" style="max-width: 140px;">
+              <label for="attSectionSelect"><i class="fa-solid fa-layer-group"></i> Section</label>
+              <select id="attSectionSelect" class="form-control">
+                <option value="">-- Section --</option>
+              </select>
+            </div>
+
+            <!-- Date Picker (Past, Present, Future) -->
+            <div class="form-group" style="max-width: 200px;">
+              <label for="attDatePicker"><i class="fa-regular fa-calendar-days"></i> Attendance Date</label>
+              <input type="date" id="attDatePicker" class="form-control">
+            </div>
+
+            <!-- Load Button -->
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-primary" onclick="loadClassAttendance()">
+                <i class="fa-solid fa-arrows-rotate"></i> Load Sheet
+              </button>
+            </div>
+          </div>
+
+          <!-- Attendance Sheet Controls & Stats -->
+          <div id="attendanceSheetContainer" style="display: none;">
+            <div class="attendance-summary-bar">
+              <div class="attendance-counters">
+                <span class="count-pill count-total">
+                  <i class="fa-solid fa-users"></i> Total: <strong id="sheetTotalCount">0</strong>
+                </span>
+                <span class="count-pill count-present">
+                  <i class="fa-solid fa-circle-check"></i> Present: <strong id="sheetPresentCount">0</strong>
+                </span>
+                <span class="count-pill count-absent">
+                  <i class="fa-solid fa-circle-xmark"></i> Absent: <strong id="sheetAbsentCount">0</strong>
+                </span>
+                <span id="savedIndicator" class="badge badge-gray" style="margin-left: 8px;">Unsaved changes</span>
+              </div>
+
+              <div class="quick-actions">
+                <button class="btn btn-outline btn-sm" onclick="markAllAttendance('present')">
+                  <i class="fa-solid fa-check-double" style="color: var(--success);"></i> Mark All Present
+                </button>
+                <button class="btn btn-outline btn-sm" onclick="markAllAttendance('absent')">
+                  <i class="fa-solid fa-xmark" style="color: var(--danger);"></i> Mark All Absent
+                </button>
+                <button class="btn btn-outline btn-sm" onclick="openDailyEmailModal()" style="color: #2563eb; border-color: #93c5fd;">
+                  <i class="fa-solid fa-envelope-open-text"></i> Send Daily Mail
+                </button>
+                <!-- Prominent SAVE DATA Button -->
+                <button class="btn btn-save-attendance" onclick="saveAttendanceData()">
+                  <i class="fa-solid fa-floppy-disk"></i> Save Data
+                </button>
+              </div>
+            </div>
+
+            <!-- Student Attendance List -->
+            <div class="attendance-card">
+              <div id="attendanceStudentsList">
+                <!-- Injected via JavaScript -->
+              </div>
+            </div>
+
+            <!-- Bottom Save Data Button -->
+            <div style="margin-top: 20px; display: flex; justify-content: flex-end;">
+              <button class="btn btn-save-attendance" style="padding: 12px 36px; font-size: 16px;" onclick="saveAttendanceData()">
+                <i class="fa-solid fa-floppy-disk"></i> Save All Attendance Data
+              </button>
+            </div>
+          </div>
+
+          <!-- Empty placeholder before sheet is loaded -->
+          <div id="attendancePlaceholder" class="empty-state" style="background: #ffffff; border-radius: var(--radius-lg); border: 1px dashed var(--border-color); padding: 60px 20px;">
+            <div class="empty-icon">
+              <i class="fa-solid fa-clipboard-user"></i>
+            </div>
+            <h4>Select Class, Section &amp; Date</h4>
+            <p>Choose your course parameters from the dropdown controls above and click <strong>"Load Sheet"</strong> to record or view attendance.</p>
+          </div>
+        </section>
+
+        <!-- ================= VIEW 3: ADD STUDENT ================= -->
+        <section id="viewAddStudent" class="section-view">
+          <div class="form-card">
+            <div class="section-header" style="margin-bottom: 18px;">
+              <div class="section-header-title">
+                <div class="brand-icon" style="width: 40px; height: 40px; font-size: 18px;">
+                  <i class="fa-solid fa-user-plus"></i>
+                </div>
+                <div>
+                  <h3>Add Students to Panel</h3>
+                  <p style="font-size: 13px; color: var(--text-muted);">Enroll individual students or upload an entire class roster in bulk via Excel</p>
+                </div>
+              </div>
+
+              <!-- Switcher: Manual vs Bulk Excel -->
+              <div class="role-switch-container" style="margin-top: 0; background: #0f172a;">
+                <button type="button" class="role-switch-btn active" id="modeBtnManual" onclick="switchAddStudentMode('manual')">
+                  <i class="fa-solid fa-user"></i> Manual Entry
+                </button>
+                <button type="button" class="role-switch-btn" id="modeBtnBulk" onclick="switchAddStudentMode('bulk')">
+                  <i class="fa-solid fa-file-excel" style="color: #10b981;"></i> Bulk Import via Excel
+                </button>
+              </div>
+            </div>
+
+            <!-- MODE 1: MANUAL SINGLE ENTRY -->
+            <div id="manualStudentContainer">
+              <!-- Success Banner (Specified by user: "student added successfull") -->
+              <div id="addStudentSuccessAlert" class="alert-success-banner">
+                <i class="fa-solid fa-circle-check" style="font-size: 18px;"></i>
+                <span>student added successfull</span>
+              </div>
+
+              <form id="addStudentForm" onsubmit="handleAddStudent(event)">
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label for="stdName">Full Name *</label>
+                    <input type="text" id="stdName" class="form-control" placeholder="e.g. Aarav Sharma" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="stdRoll">Roll Number *</label>
+                    <input type="text" id="stdRoll" class="form-control" placeholder="e.g. CS-07" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="stdCourse">Course / Degree *</label>
+                    <input type="text" id="stdCourse" list="existingCoursesList" class="form-control" placeholder="e.g. B.Tech CSE" required>
+                    <datalist id="existingCoursesList">
+                      <option value="B.Tech CSE"></option>
+                      <option value="BCA"></option>
+                      <option value="B.Sc IT"></option>
+                      <option value="B.Com"></option>
+                      <option value="Class 10"></option>
+                      <option value="Class 12"></option>
+                    </datalist>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="stdSection">Section *</label>
+                    <input type="text" id="stdSection" class="form-control" placeholder="e.g. A, B, C" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="stdAdmissionNo">Admission Number *</label>
+                    <input type="text" id="stdAdmissionNo" class="form-control" placeholder="e.g. ADM2026007" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="stdGender">Gender</label>
+                    <select id="stdGender" class="form-control">
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="stdContact">Student Contact Number</label>
+                    <input type="tel" id="stdContact" class="form-control" placeholder="e.g. +91 98765 43210">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="stdEmail">Student Email Address</label>
+                    <input type="email" id="stdEmail" class="form-control" placeholder="e.g. student@school.edu">
+                  </div>
+
+                  <div class="form-group" style="grid-column: span 2;">
+                    <label for="stdGuardianContact">Parent / Guardian Contact Details</label>
+                    <input type="text" id="stdGuardianContact" class="form-control" placeholder="e.g. Father: +91 98765 43200">
+                  </div>
+                </div>
+
+                <div class="form-footer">
+                  <button type="reset" class="btn btn-outline">
+                    <i class="fa-solid fa-eraser"></i> Clear Form
+                  </button>
+                  <button type="submit" class="btn btn-primary">
+                    <i class="fa-solid fa-check"></i> Add Student
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- MODE 2: BULK EXCEL / CSV UPLOAD -->
+            <div id="bulkStudentContainer" style="display: none;">
+              <div style="background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: var(--radius-md); padding: 16px 20px; margin-bottom: 22px; display: flex; align-items: center; justify-content: space-between; flex-wrap: gap; gap: 14px;">
+                <div>
+                  <h4 style="color: #d8b4fe; font-size: 15px; font-weight: 800; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-file-excel" style="color: #10b981;"></i> Fast Track: Bulk Student Import
+                  </h4>
+                  <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+                    Upload an Excel spreadsheet with columns: <em>Full Name, Roll Number, Course, Section, Admission Number, Contact, Email</em>
+                  </p>
+                </div>
+                <!-- Pre-formatted Sample Template Download -->
+                <a href="/api/students/template" download="EduAttend_Student_Import_Template.xlsx" class="btn btn-outline btn-sm" style="flex-shrink: 0; background: #0f172a; border-color: #a855f7; color: #d8b4fe;">
+                  <i class="fa-solid fa-file-arrow-down" style="color: #10b981;"></i> Download Sample Template (.xlsx)
+                </a>
+              </div>
+
+              <!-- File Upload Dropzone -->
+              <div class="file-dropzone" onclick="document.getElementById('excelFileInput').click()" style="padding: 36px 24px;">
+                <i class="fa-solid fa-file-excel" style="font-size: 44px; color: #10b981; margin-bottom: 10px;"></i>
+                <h4 id="excelDropzoneLabel" style="font-size: 15px; font-weight: 800; color: var(--text-main);">
+                  Click or Drag &amp; Drop Excel Sheet (.xlsx, .xls, .csv)
+                </h4>
+                <p style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">
+                  All student rows in the spreadsheet will be automatically parsed, verified, and imported into the panel in one click!
+                </p>
+                <input type="file" id="excelFileInput" accept=".xlsx,.xls,.csv" onchange="handleExcelFileSelected(this)">
+              </div>
+
+              <div style="margin-top: 22px; display: flex; justify-content: flex-end; gap: 12px;">
+                <button type="button" class="btn btn-primary" id="btnSubmitBulkExcel" onclick="handleBulkUploadExcel()" style="padding: 0 28px; background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                  <i class="fa-solid fa-file-excel"></i> Import All Students from Sheet
+                </button>
+              </div>
+
+              <!-- Bulk Upload Results Box -->
+              <div id="bulkUploadResults" style="display: none;"></div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ================= VIEW 4: STUDENT RECORDS ================= -->
+        <section id="viewRecords" class="section-view">
+          <!-- Summary Banner: Total students added till date -->
+          <div class="control-bar" style="justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <div class="brand-icon" style="background: linear-gradient(135deg, #2563eb, #3b82f6);">
+                <i class="fa-solid fa-users-viewfinder"></i>
+              </div>
+              <div>
+                <h3 style="font-size: 18px; font-weight: 700; color: var(--text-main);">
+                  All Student Records
+                </h3>
+                <p style="font-size: 13px; color: var(--text-muted);">
+                  Total Students Added Till Date: <strong id="recordsTotalBadge" style="color: var(--primary); font-size: 15px;">0</strong>
+                </p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+              <button class="btn btn-primary btn-sm" onclick="switchView('addStudent')">
+                <i class="fa-solid fa-user-plus"></i> Add New Student
+              </button>
+            </div>
+          </div>
+
+          <!-- Filter / Search Toolbar -->
+          <div class="control-bar" style="margin-bottom: 20px;">
+            <div class="form-group" style="flex: 2; min-width: 240px;">
+              <label for="recordSearchInput"><i class="fa-solid fa-magnifying-glass"></i> Search Student</label>
+              <input type="text" id="recordSearchInput" class="form-control" placeholder="Search by name, roll no, admission no..." oninput="filterStudentRecords()">
+            </div>
+
+            <div class="form-group">
+              <label for="recordCourseFilter"><i class="fa-solid fa-graduation-cap"></i> Filter by Course</label>
+              <select id="recordCourseFilter" class="form-control" onchange="filterStudentRecords()">
+                <option value="ALL">All Courses</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="max-width: 140px;">
+              <label for="recordSectionFilter"><i class="fa-solid fa-layer-group"></i> Section</label>
+              <select id="recordSectionFilter" class="form-control" onchange="filterStudentRecords()">
+                <option value="ALL">All</option>
+              </select>
+            </div>
+
+            <button class="btn btn-outline" style="align-self: flex-end;" onclick="resetRecordsFilter()">
+              <i class="fa-solid fa-rotate-left"></i> Reset
+            </button>
+          </div>
+
+          <!-- Student Records Table -->
+          <div class="table-container">
+            <table class="records-table">
+              <thead>
+                <tr>
+                  <th>Roll No</th>
+                  <th>Admission No</th>
+                  <th>Student Name</th>
+                  <th>Course &amp; Section</th>
+                  <th>Contact Info</th>
+                  <th>Attendance Record</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="allStudentsTableBody">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ================= VIEW 5: ASSIGNMENTS ================= -->
+        <section id="viewAssignments" class="section-view">
+          <div class="section-header">
+            <div class="section-header-title">
+              <div class="brand-icon" style="width: 36px; height: 36px; font-size: 16px; background: linear-gradient(135deg, #ef4444, #f97316);">
+                <i class="fa-solid fa-file-arrow-up"></i>
+              </div>
+              <div>
+                <h3>Student Assignments</h3>
+                <p style="font-size: 13px; color: var(--text-muted);">Upload syllabus, notes, and homework PDF documents for students</p>
+              </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="openAssignmentModal()">
+              <i class="fa-solid fa-plus"></i> Add Assignment
+            </button>
+          </div>
+
+          <!-- Assignments Grid -->
+          <div class="assignments-grid" id="assignmentsGridContainer">
+            <!-- Rendered dynamically -->
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: ADD ASSIGNMENT (PDF UPLOAD) ================= -->
+  <div id="assignmentModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-file-arrow-up" style="color: var(--primary); margin-right: 8px;"></i> Upload Assignment</h3>
+        <button class="modal-close-btn" onclick="closeAssignmentModal()">&times;</button>
+      </div>
+
+      <form id="assignmentUploadForm" onsubmit="handleUploadAssignment(event)">
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="form-group">
+            <label for="asgTitle">Assignment Title *</label>
+            <input type="text" id="asgTitle" class="form-control" placeholder="e.g. Unit 3: Graph Traversal Algorithms" required>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="asgCourse">Course *</label>
+              <select id="asgCourse" class="form-control" required>
+                <!-- Populated dynamically -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="asgSection">Section *</label>
+              <input type="text" id="asgSection" class="form-control" placeholder="e.g. A" required>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="asgSubject">Subject / Topic</label>
+              <input type="text" id="asgSubject" class="form-control" placeholder="e.g. Data Structures">
+            </div>
+            <div class="form-group">
+              <label for="asgDueDate">Submission Due Date</label>
+              <input type="date" id="asgDueDate" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="asgDescription">Instructions &amp; Description</label>
+            <textarea id="asgDescription" class="form-control" rows="3" placeholder="Provide instructions for students regarding submission guidelines..."></textarea>
+          </div>
+
+          <!-- File / PDF Upload Drag-Drop Box -->
+          <div class="form-group">
+            <label><i class="fa-solid fa-paperclip"></i> Upload Assignment File / PDF *</label>
+            <div class="file-dropzone" onclick="document.getElementById('asgFile').click()">
+              <i class="fa-solid fa-cloud-arrow-up" style="font-size: 36px; color: var(--primary); margin-bottom: 8px;"></i>
+              <h4 id="dropzoneLabel" style="font-size: 14px; font-weight: 600;">Click or Drag &amp; Drop Assignment PDF</h4>
+              <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Supports PDF, DOCX, TXT, ZIP (up to 25MB)</p>
+              <input type="file" id="asgFile" name="assignmentFile" accept=".pdf,.doc,.docx,.txt,.zip" onchange="handleFileSelected(this)">
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeAssignmentModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btnUploadSubmit">
+            <i class="fa-solid fa-upload"></i> Upload &amp; Publish
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: STUDENT ATTENDANCE HISTORY ================= -->
+  <div id="studentHistoryModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h3 id="historyStudentName">Student Attendance History</h3>
+          <p id="historyStudentDetails" style="font-size: 12px; color: var(--text-muted);">Roll No • Course</p>
+        </div>
+        <button class="modal-close-btn" onclick="closeStudentHistoryModal()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- History Stats Overview -->
+        <div class="metrics-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 20px;">
+          <div style="background: #f8fafc; padding: 12px; border-radius: var(--radius-md); text-align: center;">
+            <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted);">Total Recorded</div>
+            <div id="histTotalDays" style="font-size: 20px; font-weight: 800;">0</div>
+          </div>
+          <div style="background: var(--success-light); padding: 12px; border-radius: var(--radius-md); text-align: center;">
+            <div style="font-size: 11px; text-transform: uppercase; color: var(--success-text);">Present (Green)</div>
+            <div id="histPresentDays" style="font-size: 20px; font-weight: 800; color: var(--success);">0</div>
+          </div>
+          <div style="background: var(--danger-light); padding: 12px; border-radius: var(--radius-md); text-align: center;">
+            <div style="font-size: 11px; text-transform: uppercase; color: var(--danger-text);">Absent (Red)</div>
+            <div id="histAbsentDays" style="font-size: 20px; font-weight: 800; color: var(--danger);">0</div>
+          </div>
+        </div>
+
+        <!-- Historical List (Past, Present, Future) -->
+        <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 12px; color: var(--text-main);">
+          <i class="fa-solid fa-clock-rotate-left"></i> Date Records
+        </h4>
+        <div id="historyListContainer" class="attendance-history-list">
+          <!-- Rendered dynamically with green for present and red for absent -->
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" onclick="closeStudentHistoryModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: DAILY ATTENDANCE EMAIL DISPATCH ================= -->
+  <div id="dailyEmailModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 680px;">
+      <div class="modal-header">
+        <div>
+          <h3><i class="fa-solid fa-paper-plane" style="color: var(--primary); margin-right: 8px;"></i> Send Daily Attendance Emails</h3>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Automated 1-click end-of-day email notification to all students</p>
+        </div>
+        <button class="modal-close-btn" onclick="closeDailyEmailModal()">&times;</button>
+      </div>
+
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius-md); padding: 14px 16px; font-size: 13px; color: #1e40af; display: flex; gap: 12px; align-items: flex-start;">
+          <i class="fa-solid fa-circle-info" style="font-size: 20px; color: #3b82f6; margin-top: 2px;"></i>
+          <div>
+            <strong>End-of-Day Email Automation:</strong>
+            <p style="margin-top: 4px; line-height: 1.4;">
+              Clicking below will automatically generate and dispatch personalized attendance emails to all enrolled students for the chosen date. Each email includes their <strong>today's attendance status (e.g. 4/8 classes attended)</strong>, overall attendance percentage, and academic standing summary.
+            </p>
+          </div>
+        </div>
+
+        <div class="control-bar" style="margin-bottom: 0; padding: 14px 18px; align-items: center; justify-content: space-between;">
+          <div class="form-group" style="max-width: 220px; margin-bottom: 0;">
+            <label for="emailTargetDate"><i class="fa-regular fa-calendar"></i> Target Date</label>
+            <input type="date" id="emailTargetDate" class="form-control">
+          </div>
+
+          <!-- 1-Click Send Button -->
+          <button class="btn btn-primary" id="btnSendEmailsSubmit" onclick="sendDailyAttendanceEmailsNow()" style="background: linear-gradient(135deg, #0284c7, #2563eb); font-weight: 700; padding: 0 24px;">
+            <i class="fa-solid fa-paper-plane"></i> Send Daily Emails in 1-Click
+          </button>
+        </div>
+
+        <!-- Recent Email Outbox / Logs -->
+        <h4 style="font-size: 14px; font-weight: 700; margin-top: 8px; color: var(--text-main); display: flex; align-items: center; justify-content: space-between;">
+          <span><i class="fa-solid fa-clock-rotate-left"></i> Dispatched Email Outbox</span>
+          <button class="btn btn-outline btn-sm" onclick="loadEmailLogs()">
+            <i class="fa-solid fa-rotate-right"></i> Refresh Logs
+          </button>
+        </h4>
+
+        <div style="border: 1px solid var(--border-color); border-radius: var(--radius-md); max-height: 240px; overflow-y: auto;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
+            <thead>
+              <tr style="background: #f8fafc; border-bottom: 1px solid var(--border-color); color: var(--text-muted); text-transform: uppercase;">
+                <th style="padding: 10px 12px;">Student</th>
+                <th style="padding: 10px 12px;">Email</th>
+                <th style="padding: 10px 12px;">Date</th>
+                <th style="padding: 10px 12px;">Ratio</th>
+                <th style="padding: 10px 12px;">Status</th>
+                <th style="padding: 10px 12px; text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="emailLogsTableBody">
+              <!-- Rendered via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" onclick="closeDailyEmailModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: EMAIL PREVIEW ================= -->
+  <div id="emailPreviewModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 640px;">
+      <div class="modal-header">
+        <div>
+          <h4 id="emailPreviewSubject" style="font-weight: 700; font-size: 15px;">Daily Attendance Report</h4>
+          <p id="emailPreviewTo" style="font-size: 12px; color: var(--text-muted);">To: student@school.edu</p>
+        </div>
+        <button class="modal-close-btn" onclick="closeEmailPreviewModal()">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 0;">
+        <iframe id="emailPreviewFrame" style="width: 100%; height: 380px; border: none; background: #f8fafc;"></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" onclick="closeEmailPreviewModal()">Close Preview</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: DELETE CONFIRMATION ================= -->
+  <div id="deleteConfirmModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 style="color: var(--danger);"><i class="fa-solid fa-triangle-exclamation"></i> Delete Student Record</h3>
+        <button class="modal-close-btn" onclick="closeDeleteModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 14px; color: var(--text-main);">
+          Are you sure you want to permanently delete student record for <strong id="deleteTargetStudentName">Student</strong>?
+        </p>
+        <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">
+          This will also remove all associated attendance records for this student. This action cannot be undone.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" onclick="closeDeleteModal()">Cancel</button>
+        <button type="button" class="btn btn-danger" id="btnConfirmDeleteStudent" onclick="confirmDeleteStudent()">
+          <i class="fa-solid fa-trash-can"></i> Yes, Delete Record
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/auth.js"></script>
+  <script src="js/attendance.js"></script>
+  <script src="js/students.js"></script>
+  <script src="js/assignments.js"></script>
+  <script src="js/email.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
