@@ -15,7 +15,7 @@ const CounterApp = () => {
         width: '300px',
         textAlign: 'center',
         margin: 'auto',
-        padding: '10px',
+        padding: '10px',  
       }}
     >
       <h3>Counter</h3>
